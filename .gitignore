@@ -1,5 +1,18 @@
 # Compiled class file
 *.class
+/target/
+/build/
+/bin/
+
+# Eclipse
+.classpath
+.project
+/.settings/
+
+# Temporary Files
+*~
+.*.swp
+.DS_STORE
 
 # Log file
 *.log
