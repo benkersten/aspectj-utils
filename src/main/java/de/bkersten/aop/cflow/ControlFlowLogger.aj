@@ -1,6 +1,7 @@
 package de.bkersten.aop.cflow;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -25,7 +26,7 @@ public class ControlFlowLogger {
 	
 	private int indent = 0;
 
-	@Pointcut("execution(* *.*(..)) && !within(ControlFlowLogger)")
+	@Pointcut("execution(* *.*(..)) && !within(de.bkersten.aop..*)")
 	void allMethods(){}
 	
 	@Before("allMethods()")
@@ -34,7 +35,7 @@ public class ControlFlowLogger {
 		indent++;
 	}
 	
-	@Before("allMethods()")
+	@After("allMethods()")
 	public void afterAllMethods(JoinPoint.EnclosingStaticPart thisJoinPointStaticPart){
 		indent--;
 		logMethodSignature( "<-", thisJoinPointStaticPart );

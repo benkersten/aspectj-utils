@@ -1,6 +1,8 @@
-package de.bkersten.aop.cflow;
+package de.bkersten.aop.cflow.keywords;
 
 import org.aspectj.lang.JoinPoint;
+
+import de.bkersten.aop.cflow.ControlFlowLogger;
 
 /**
  * Aspect for logging complete control flow of a Java application.
@@ -18,7 +20,7 @@ public privileged aspect ControlFlowLoggerKeywords {
 	private int indent = 0;
 
 	pointcut AllMethods() : execution(* *.*(..))
-							&& !within(ControlFlowLoggerKeywords);
+							&& !within(de.bkersten.aop..*);
 	
 	
 	before() : AllMethods(){
