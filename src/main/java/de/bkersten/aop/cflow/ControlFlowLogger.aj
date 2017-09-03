@@ -1,5 +1,7 @@
 package de.bkersten.aop.cflow;
 
+import java.net.URL;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,12 +19,17 @@ import org.aspectj.lang.annotation.Pointcut;
  * Nested method executions are indented for better readability. Indention
  * is decreased on return of method.
  * 
+ * This Aspect allows for conditional logging. By default, logging is enabled,
+ * which might produce lots of logs. If you are interested in logging 
+ * specific parts / at specific times only, you can disable logging by 
+ * touching a file named ".disablecflow" anywhere on classpath (current 
+ * directory). To enable again, just remove "disablecflow".
+ * 
  * @author bkersten
  *
  */
 @Aspect
 public class ControlFlowLogger {
-
 	
 	private int indent = 0;
 
@@ -42,7 +49,23 @@ public class ControlFlowLogger {
 	}	
 	
 	private void logMethodSignature(String symbol, JoinPoint.StaticPart staticPart){
-		System.out.println(indent() + symbol + " " + staticPart);
+		if( isEnabled() ){
+			System.out.println(indent() + symbol + " " + staticPart + "  [by +"+this.getClass().getSimpleName()+"]");
+		}
+	}
+	
+	/**
+	 * Checks for existence of ".disablecflow" file on classpath. If true, 
+	 * logging of cflow will be omitted.
+	 * @return
+	 */
+	private boolean isEnabled(){
+		URL url = this.getClass().getClassLoader().getResource(".disablecflow");
+		System.out.println("isEnabled-check: url="+url);
+		if( url != null ){
+			return false;
+		}
+		return true;
 	}
 	
 	private String indent(){
