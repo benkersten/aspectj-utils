@@ -50,7 +50,7 @@ public class ControlFlowLogger {
 	
 	private void logMethodSignature(String symbol, JoinPoint.StaticPart staticPart){
 		if( isEnabled() ){
-			System.out.println(indent() + symbol + " " + staticPart + "  [by +"+this.getClass().getSimpleName()+"]");
+			System.out.println(indent() + symbol + " " + staticPart + "  [by "+this.getClass().getSimpleName()+"]");
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class ControlFlowLogger {
 	 */
 	private boolean isEnabled(){
 		URL url = this.getClass().getClassLoader().getResource(".disablecflow");
-		System.out.println("isEnabled-check: url="+url);
+		// System.out.println("isEnabled-check: url="+url);
 		if( url != null ){
 			return false;
 		}
