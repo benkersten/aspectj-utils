@@ -6,6 +6,7 @@
     <aspects>
         <aspect name="de.bkersten.aop.cflow.ControlFlowLogger" />
         <aspect name="de.bkersten.aop.cflow.keywords.ControlFlowLoggerKeywords" />
+		<aspect name="de.bkersten.test.TestAspect" />
 
         <!-- exlude aspects -->
         <exclude within="de.bkersten.aop.cflow.keywords.*" />

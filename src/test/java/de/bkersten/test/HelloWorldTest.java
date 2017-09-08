@@ -1,5 +1,8 @@
 package de.bkersten.test;
 
+import static org.junit.Assert.*;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class HelloWorldTest {
@@ -21,6 +24,7 @@ public class HelloWorldTest {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Ignore
 	public void longRunningHelloWorld() throws InterruptedException{		
 		
 		long sleepTime = 5000L;
@@ -51,5 +55,17 @@ public class HelloWorldTest {
 		System.out.println("Hello World 5");
 	}
 	
+	
+	public String getterMethod(){
+		return "getter-value";
+	}
+	
+	@Test
+	public void aroundAdviceOnGetterMethod(){
+		
+		String getter = getterMethod();
+		assertEquals("getter-value"+TestAspect.INJECTION_SUFFIX, getter);
+		
+	}
 	
 }
