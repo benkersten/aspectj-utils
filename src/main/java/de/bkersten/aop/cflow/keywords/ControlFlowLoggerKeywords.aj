@@ -34,7 +34,7 @@ public privileged aspect ControlFlowLoggerKeywords {
 	}	
 	
 	private void logMethodSignature(String symbol, JoinPoint.StaticPart staticPart){
-		System.out.println(indent() + symbol + " " + staticPart + "  [by +"+this.getClass().getSimpleName()+"]");
+		System.out.println(indent() + symbol + " " + staticPart + "  [by "+this.getClass().getSimpleName()+"]");
 	}
 	
 	private String indent(){

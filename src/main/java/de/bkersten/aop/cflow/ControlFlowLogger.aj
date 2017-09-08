@@ -1,6 +1,9 @@
 package de.bkersten.aop.cflow;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -31,6 +34,12 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class ControlFlowLogger {
 	
+	private static final String PREFIX = "[aspectj-utils]";
+	private static final String POSTFIX = "[" + ControlFlowLogger.class.getSimpleName() + "]";
+	private static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	
+	
+	
 	private int indent = 0;
 
 	@Pointcut("execution(* *.*(..)) && !within(de.bkersten.aop..*)")
@@ -50,7 +59,16 @@ public class ControlFlowLogger {
 	
 	private void logMethodSignature(String symbol, JoinPoint.StaticPart staticPart){
 		if( isEnabled() ){
-			System.out.println(indent() + symbol + " " + staticPart + "  [by +"+this.getClass().getSimpleName()+"]");
+			System.out.println( PREFIX + 
+								"[" + getDateTime() + "]" +
+								indent() + 
+								" " + 
+								symbol + 
+								" " + 
+								staticPart + 
+								"  " +
+								POSTFIX);
+			
 		}
 	}
 	
@@ -61,7 +79,7 @@ public class ControlFlowLogger {
 	 */
 	private boolean isEnabled(){
 		URL url = this.getClass().getClassLoader().getResource(".disablecflow");
-		System.out.println("isEnabled-check: url="+url);
+		// System.out.println("isEnabled-check: url="+url);
 		if( url != null ){
 			return false;
 		}
@@ -74,6 +92,10 @@ public class ControlFlowLogger {
 			sb.append("   "); // 3 spaces
 		}
 		return sb.toString();
+	}
+	
+	private String getDateTime(){
+		return LocalDateTime.now().toString();
 	}
 	
 }
